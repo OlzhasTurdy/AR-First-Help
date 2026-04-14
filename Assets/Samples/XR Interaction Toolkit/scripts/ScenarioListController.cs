@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-// Вспомогательные классы для парсинга JSON от PHP
 [System.Serializable]
 public class ScenarioDBItem
 {
@@ -15,6 +14,7 @@ public class ScenarioDBItem
     public string json_data;
     public int likes;
     public int views;
+    public bool isLiked; // Приходит от PHP (true/false)
 }
 
 [System.Serializable]
@@ -26,13 +26,16 @@ public class ScenarioDBResult
 public class ScenarioListController : MonoBehaviour
 {
     [Header("UI Elements")]
-    public Transform contentPanel;   // Сюда перетащите объект Content из ScrollView
-    public GameObject buttonPrefab;  // Сюда перетащите сохраненный префаб кнопки
-    public GameObject loadingText;   // (Опционально) Текст "Загрузка..."
+    public Transform contentPanel;
+    public GameObject buttonPrefab;
+    public GameObject loadingText;
+
+    [Header("Like Settings")]
+    public Sprite likedSprite;      // Красное/Заполненное сердечко
+    public Sprite notLikedSprite;   // Пустое/Серое сердечко
 
     void Start()
     {
-        // Как только экран открылся, скачиваем список
         StartCoroutine(FetchScenarios());
     }
 
@@ -40,7 +43,9 @@ public class ScenarioListController : MonoBehaviour
     {
         if (loadingText != null) loadingText.SetActive(true);
 
-        string url = "https://autoreduce.kz/get_scenarios.php";
+        // Получаем ID игрока (должен быть сохранен при логине)
+        int userId = PlayerPrefs.GetInt("CurrentUserID", 0);
+        string url = "https://autoreduce.kz/get_scenarios.php?user_id=" + userId;
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
@@ -48,14 +53,8 @@ public class ScenarioListController : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.Success)
             {
-                // Получаем ответ от PHP
                 string jsonResponse = www.downloadHandler.text;
-                Debug.Log("Получено от сервера: " + jsonResponse);
-
-                // Превращаем JSON в объекты C#
                 ScenarioDBResult result = JsonUtility.FromJson<ScenarioDBResult>(jsonResponse);
-
-                // Отрисовываем кнопки
                 PopulateList(result.items);
             }
             else
@@ -78,58 +77,90 @@ public class ScenarioListController : MonoBehaviour
         {
             GameObject newBtnObj = Instantiate(buttonPrefab, contentPanel);
 
-            // 1. Основной текст (Имя и просмотры)
+            // 1. Имя и просмотры
             TextMeshProUGUI btnText = newBtnObj.GetComponentInChildren<TextMeshProUGUI>();
             if (btnText != null)
-            {
                 btnText.text = $"{sc.scenario_name} (Views {sc.views})";
+
+            // 2. Логика Лайка
+            // Ищем кнопку лайка по имени в префабе (например "LikeButton")
+            Button likeBtn = newBtnObj.transform.Find("LikeButton")?.GetComponent<Button>();
+            Image likeIcon = newBtnObj.transform.Find("LikeButton/Like")?.GetComponent<Image>();
+            TextMeshProUGUI likeCountText = newBtnObj.transform.Find("LikeCount")?.GetComponent<TextMeshProUGUI>();
+
+            if (likeBtn != null)
+            {
+                // Устанавливаем начальное состояние из БД
+                if (likeCountText != null) likeCountText.text = sc.likes.ToString();
+                if (likeIcon != null) likeIcon.sprite = sc.isLiked ? likedSprite : notLikedSprite;
+
+                bool currentStatus = sc.isLiked;
+                int scenarioId = sc.id;
+
+                likeBtn.onClick.AddListener(() => {
+                    // Переключаем локально для скорости
+                    currentStatus = !currentStatus;
+
+                    // Обновляем текст (визуально прибавляем/отнимаем 1)
+                    if (likeCountText != null)
+                    {
+                        int val = int.Parse(likeCountText.text);
+                        val = currentStatus ? val + 1 : val - 1;
+                        likeCountText.text = val.ToString();
+                    }
+
+                    // Меняем иконку
+                    if (likeIcon != null) likeIcon.sprite = currentStatus ? likedSprite : notLikedSprite;
+
+                    // Отправляем на сервер
+                    StartCoroutine(SendLikeRequest(scenarioId));
+                });
             }
 
-            // 2. Логика основной кнопки (Запуск AR)
+            // 3. Логика основной кнопки (Запуск AR)
             Button mainBtn = newBtnObj.GetComponent<Button>();
-            int idForButton = sc.id;
-            string jsonForButton = sc.json_data;
-            string nameForButton = sc.scenario_name;
+            mainBtn.onClick.AddListener(() => OnScenarioButtonClicked(sc.id, sc.json_data));
 
-            mainBtn.onClick.AddListener(() => OnScenarioButtonClicked(idForButton, jsonForButton));
-
-            // 3. Логика кнопки комментариев (Ищем дочернюю кнопку "InfoButton")
-            // Предположим, вы добавили её в префаб и назвали "InfoButton"
+            // 4. Логика кнопки Info
             Button infoBtn = newBtnObj.transform.Find("InfoButton")?.GetComponent<Button>();
-
             if (infoBtn != null)
             {
-                infoBtn.onClick.AddListener(() => OnCommentsButtonClicked(idForButton, nameForButton));
+                infoBtn.onClick.AddListener(() => OnCommentsButtonClicked(sc.id, sc.scenario_name));
             }
         }
     }
 
-    // Метод для перехода к комментариям
+    private IEnumerator SendLikeRequest(int scenarioId)
+    {
+        int userId = PlayerPrefs.GetInt("CurrentUserID", 1);
+        if (userId == 0) yield break;
+
+        WWWForm form = new WWWForm();
+        form.AddField("user_id", userId);
+        form.AddField("scenario_id", scenarioId);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://autoreduce.kz/like_scenario.php", form))
+        {
+            yield return www.SendWebRequest();
+            // Обработка ответа при необходимости
+        }
+    }
+
     private void OnCommentsButtonClicked(int scenarioId, string scenarioName)
     {
-        Debug.Log("Переход к комментариям сценария: " + scenarioId);
-
-        // Сохраняем ID и Имя, чтобы сцена комментариев знала, что загружать
         PlayerPrefs.SetInt("SelectedScenarioID", scenarioId);
         PlayerPrefs.SetString("SelectedScenarioName", scenarioName);
-
-        // Загружаем сцену с комментариями (проверьте название сцены!)
         SceneManager.LoadScene("CommentScene");
     }
 
-    private void OnScenarioButtonClicked(int scenarioId,string jsonData)
+    private void OnScenarioButtonClicked(int scenarioId, string jsonData)
     {
         StartCoroutine(UpdateViewCount(scenarioId));
-
-        // 1. Распаковываем сам сценарий из JSON-строки
-        CustomScenario loadedScenario = JsonUtility.FromJson<CustomScenario>(jsonData);
-
-        // 2. Передаем его в наш глобальный менеджер (который мы обновляли в прошлом шаге)
-        ScenarioManager.GetInstance().SelectCustomScenario(loadedScenario);
-
-        // 3. Загружаем вашу сцену с AR (напишите сюда правильное название вашей AR-сцены!)
+        // CustomScenario loadedScenario = JsonUtility.FromJson<CustomScenario>(jsonData);
+        // ScenarioManager.GetInstance().SelectCustomScenario(loadedScenario);
         SceneManager.LoadScene("ARScene");
     }
+
     IEnumerator UpdateViewCount(int id)
     {
         WWWForm form = new WWWForm();

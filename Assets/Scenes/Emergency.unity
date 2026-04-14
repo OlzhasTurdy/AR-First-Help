@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelToRotate: {fileID: 423898860}
-  rotationSpeed: 0.4
+  sensitivity: 0.4
 --- !u!1 &36404743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,7 +1006,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: dsadsadsadsadasdasdsadas
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bead263900e293a4cb50c9cfebe2cedf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db4686bf70705e14fb0ea68ea3de7996, type: 2}
   m_sharedMaterial: {fileID: 907019751890817827, guid: bead263900e293a4cb50c9cfebe2cedf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1070,7 +1070,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &483752234
@@ -1571,7 +1571,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: dsadsadsadsadasdasdsadas
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bead263900e293a4cb50c9cfebe2cedf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db4686bf70705e14fb0ea68ea3de7996, type: 2}
   m_sharedMaterial: {fileID: 907019751890817827, guid: bead263900e293a4cb50c9cfebe2cedf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1635,7 +1635,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &947415267
@@ -2023,7 +2023,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: dsadsadsadsadasdasdsadas
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bead263900e293a4cb50c9cfebe2cedf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db4686bf70705e14fb0ea68ea3de7996, type: 2}
   m_sharedMaterial: {fileID: 907019751890817827, guid: bead263900e293a4cb50c9cfebe2cedf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2087,7 +2087,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1244831557
@@ -2366,7 +2366,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: dsadsadsadsadasdasdsadas
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: bead263900e293a4cb50c9cfebe2cedf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db4686bf70705e14fb0ea68ea3de7996, type: 2}
   m_sharedMaterial: {fileID: 907019751890817827, guid: bead263900e293a4cb50c9cfebe2cedf, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2430,7 +2430,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1372602262
@@ -2527,7 +2527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelToRotate: {fileID: 601206469}
-  rotationSpeed: 0.4
+  sensitivity: 0.4
 --- !u!1001 &1406547646
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2849,7 +2849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelToRotate: {fileID: 1406547647}
-  rotationSpeed: 0.4
+  sensitivity: 0.4
 --- !u!1 &1633862338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2907,10 +2907,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Call Emergency
+  m_text: "\u049A\u043E\u04A3\u044B\u0440\u0430\u0443 112"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6fb2b0c2f5966694ebfbcb81ef3ab211, type: 2}
-  m_sharedMaterial: {fileID: 921722721262193008, guid: 6fb2b0c2f5966694ebfbcb81ef3ab211, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db4686bf70705e14fb0ea68ea3de7996, type: 2}
+  m_sharedMaterial: {fileID: 4231417215805649625, guid: db4686bf70705e14fb0ea68ea3de7996, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3130,7 +3130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelToRotate: {fileID: 485994620}
-  rotationSpeed: 0.4
+  sensitivity: 0.4
 --- !u!1 &1718667118
 GameObject:
   m_ObjectHideFlags: 0
