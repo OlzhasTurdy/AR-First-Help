@@ -1394,13 +1394,14 @@ MonoBehaviour:
   cprCheckPrefab: {fileID: 8441866857601129790, guid: 07b018a685b51c947ab9c6e4e51ead19, type: 3}
   cprCallPrefab: {fileID: 4437159220986718815, guid: 98e9029a45c33ca468d5cf5784bfe6f5, type: 3}
   cprCompressPrefab: {fileID: 910826547885957500, guid: e75d615dc6ebadc4e82743838cca04a2, type: 3}
-  chokingPrefab: {fileID: 6091976093484482253, guid: 42fc4e261909c5d4391acde7dc4951fc, type: 3}
+  chokingPrefab: {fileID: 5367800942259918343, guid: 1be71eaace96fb5488c1e48cdb09ea1e, type: 3}
   bleedingPrefab: {fileID: 4190445782117981116, guid: 6ebf036bcda172442be0c1ab5d16bf27, type: 3}
   unconsciousPrefab: {fileID: 651395405602928542, guid: e6c2e37506c298643a54e6ef7f01dace, type: 3}
   raycastManager: {fileID: 331264295}
   safetySprite: {fileID: 21300000, guid: f80fe56b7ff67844a9585a46f5094812, type: 3}
   checkBreathingSprite: {fileID: 21300000, guid: 0b5cf1d43e833744d802dc0d8fcf1b97, type: 3}
   heimlichSprite: {fileID: 21300000, guid: cb209bc0a5154e74b89fb1a20a452e33, type: 3}
+  typingSpeed: 0.02
   rotationSpeed: 0.5
 --- !u!4 &204340279
 Transform:

@@ -43,6 +43,6 @@ public class SceneLoader : MonoBehaviour
     }
     public void Hans()
     {
-        SceneManager.LoadScene("Pose Landmark Detection");
+        SceneManager.LoadScene("Theory");
     }
 }

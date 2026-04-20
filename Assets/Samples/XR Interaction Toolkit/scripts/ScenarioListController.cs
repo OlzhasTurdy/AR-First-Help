@@ -80,7 +80,7 @@ public class ScenarioListController : MonoBehaviour
             // 1. Имя и просмотры
             TextMeshProUGUI btnText = newBtnObj.GetComponentInChildren<TextMeshProUGUI>();
             if (btnText != null)
-                btnText.text = $"{sc.scenario_name} (Views {sc.views})";
+                btnText.text = $"{sc.scenario_name}";
 
             // 2. Логика Лайка
             // Ищем кнопку лайка по имени в префабе (например "LikeButton")
