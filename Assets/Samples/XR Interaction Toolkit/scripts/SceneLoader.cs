@@ -5,6 +5,7 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadAR()
     {
+        ResetScenarioIfNeeded();
         SceneManager.LoadScene("ScenarioSelection");
     }
     public void LoadARSC()
@@ -27,6 +28,11 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadMenu()
     {
+        // Обязательно сбрасываем данные при возврате в главное меню
+        if (ScenarioManager.Instance != null)
+        {
+            ScenarioManager.Instance.ReturnToMainMenu();
+        }
         SceneManager.LoadScene("MainMenu");
     }
     public void LoadScenario()
@@ -44,5 +50,12 @@ public class SceneLoader : MonoBehaviour
     public void Hans()
     {
         SceneManager.LoadScene("Theory");
+    }
+    private void ResetScenarioIfNeeded()
+    {
+        if (ScenarioManager.Instance != null)
+        {
+            ScenarioManager.Instance.ResetScenarioData();
+        }
     }
 }

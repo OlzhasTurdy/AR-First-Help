@@ -36,17 +36,42 @@ public class ScenarioManager : MonoBehaviour
         return Instance;
     }
 
-    
+
     public void SelectScenario(string scenarioName)
     {
+        // Сбрасываем предыдущие данные
+        ResetScenarioData();
+
         isCustomScenario = false;
         selectedScenario = scenarioName;
+
+        Debug.Log($"Selected standard scenario: {scenarioName}");
     }
 
-    // НОВЫЙ Метод для запуска сценария из базы данных
     public void SelectCustomScenario(CustomScenario customData)
     {
+        // Сбрасываем предыдущие данные
+        ResetScenarioData();
+
         isCustomScenario = true;
         currentCustomScenario = customData;
+
+        Debug.Log($"Selected custom scenario: {customData?.scenarioName ?? "null"}");
+    }
+
+    // НОВЫЙ Метод для полного сброса состояния
+    public void ResetScenarioData()
+    {
+        selectedScenario = null;
+        isCustomScenario = false;
+        currentCustomScenario = null;
+
+        Debug.Log("ScenarioManager data reset");
+    }
+
+    // НОВЫЙ Метод для очистки при возврате в главное меню
+    public void ReturnToMainMenu()
+    {
+        ResetScenarioData();
     }
 }

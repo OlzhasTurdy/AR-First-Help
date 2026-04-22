@@ -44,7 +44,8 @@ public class ScenarioListController : MonoBehaviour
         if (loadingText != null) loadingText.SetActive(true);
 
         // Получаем ID игрока (должен быть сохранен при логине)
-        int userId = PlayerPrefs.GetInt("CurrentUserID", 0);
+        int userId = PlayerPrefs.GetInt("CurrentUserID", 1);
+        Debug.Log("Загружаем сценарии для пользователя с ID: " + userId);
         string url = "https://autoreduce.kz/get_scenarios.php?user_id=" + userId;
 
         using (UnityWebRequest www = UnityWebRequest.Get(url))
@@ -113,7 +114,8 @@ public class ScenarioListController : MonoBehaviour
                     if (likeIcon != null) likeIcon.sprite = currentStatus ? likedSprite : notLikedSprite;
 
                     // Отправляем на сервер
-                    StartCoroutine(SendLikeRequest(scenarioId));
+                    // Передаем currentStatus, чтобы сервер знал, ставим мы лайк или убираем
+                    StartCoroutine(SendLikeRequest(scenarioId, currentStatus));
                 });
             }
 
@@ -130,7 +132,7 @@ public class ScenarioListController : MonoBehaviour
         }
     }
 
-    private IEnumerator SendLikeRequest(int scenarioId)
+    private IEnumerator SendLikeRequest(int scenarioId, bool isLiking)
     {
         int userId = PlayerPrefs.GetInt("CurrentUserID", 1);
         if (userId == 0) yield break;
@@ -139,10 +141,26 @@ public class ScenarioListController : MonoBehaviour
         form.AddField("user_id", userId);
         form.AddField("scenario_id", scenarioId);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://autoreduce.kz/like_scenario.php", form))
+        // ДОБАВЛЕНО: отправляем параметр action, который ждет PHP
+        form.AddField("action", isLiking ? "like" : "unlike");
+
+        // ВНИМАНИЕ: Убедись, что имя файла здесь правильное! 
+        // У тебя в одном месте был like_scenario.php, в другом like_logic.php
+        string url = "https://autoreduce.kz/like_logic.php";
+
+        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
         {
             yield return www.SendWebRequest();
-            // Обработка ответа при необходимости
+
+            // Добавим логирование для удобной отладки
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Ошибка запроса: " + www.error);
+            }
+            else
+            {
+                Debug.Log("Ответ сервера: " + www.downloadHandler.text);
+            }
         }
     }
 
@@ -155,10 +173,12 @@ public class ScenarioListController : MonoBehaviour
 
     private void OnScenarioButtonClicked(int scenarioId, string jsonData)
     {
-        StartCoroutine(UpdateViewCount(scenarioId));
-        // CustomScenario loadedScenario = JsonUtility.FromJson<CustomScenario>(jsonData);
-        // ScenarioManager.GetInstance().SelectCustomScenario(loadedScenario);
-        SceneManager.LoadScene("ARScene");
+        // 1. Обязательно передаем данные в наш "бессмертный" менеджер
+        CustomScenario loadedScenario = JsonUtility.FromJson<CustomScenario>(jsonData);
+        ScenarioManager.GetInstance().SelectCustomScenario(loadedScenario);
+
+        // 2. Запускаем корутину, которая сначала отправит просмотр, а потом загрузит сцену
+        StartCoroutine(UpdateViewAndLoadScene(scenarioId));
     }
 
     IEnumerator UpdateViewCount(int id)
@@ -169,5 +189,26 @@ public class ScenarioListController : MonoBehaviour
         {
             yield return www.SendWebRequest();
         }
+    }
+    private IEnumerator UpdateViewAndLoadScene(int id)
+    {
+        // Подготавливаем форму
+        WWWForm form = new WWWForm();
+        form.AddField("scenario_id", id);
+
+        // Отправляем запрос
+        using (UnityWebRequest www = UnityWebRequest.Post("https://autoreduce.kz/view_scenario.php", form))
+        {
+            // yield return заставит Unity подождать, пока запрос не завершится
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogWarning("Не удалось обновить просмотры: " + www.error);
+            }
+        }
+
+        // ТОЛЬКО ПОСЛЕ ТОГО, как запрос ушел, загружаем AR-сцену
+        SceneManager.LoadScene("ARScene");
     }
 }
