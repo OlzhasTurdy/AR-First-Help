@@ -22,6 +22,12 @@ public class CPRPracticeSpawner : MonoBehaviour
     {
         Debug.Log("Practice Button Pressed");
         waitingForPlacement = true;
+
+        if (spawnedObject != null)
+        {
+            Destroy(spawnedObject);
+            spawnedObject = null;
+        }
     }
 
     void Update()
@@ -44,6 +50,9 @@ public class CPRPracticeSpawner : MonoBehaviour
                     // 🔥 НАСТРОЙКА UI
                     CPRPracticeController controller =
                         spawnedObject.GetComponentInChildren<CPRPracticeController>();
+
+                    if (controller == null)
+                        controller = spawnedObject.AddComponent<CPRPracticeController>();
 
                     controller.Initialize(feedbackText, counterText, resultText);
                     controller.StartPractice();

@@ -17,6 +17,6 @@ public class ScenarioButtonHandler : MonoBehaviour
 
         // 2. Загружаем сцену (можете вызывать через свой SceneLoader, 
         // но можно и напрямую для экономии времени)
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("ARScene");
+        ARSceneLoadGuard.LoadARScene();
     }
 }

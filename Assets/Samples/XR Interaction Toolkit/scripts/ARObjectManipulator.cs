@@ -14,7 +14,10 @@ public class ARObjectManipulator : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began)
             {
-                Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                Camera mainCamera = Camera.main;
+                if (mainCamera == null) return;
+
+                Ray ray = mainCamera.ScreenPointToRay(touch.position);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit))
@@ -28,7 +31,10 @@ public class ARObjectManipulator : MonoBehaviour
 
             if (touch.phase == TouchPhase.Moved)
             {
-                Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                Camera mainCamera = Camera.main;
+                if (mainCamera == null) return;
+
+                Ray ray = mainCamera.ScreenPointToRay(touch.position);
                 Plane plane = new Plane(Vector3.up, transform.position);
                 float distance;
 

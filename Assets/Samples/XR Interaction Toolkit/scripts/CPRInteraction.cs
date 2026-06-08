@@ -37,7 +37,10 @@ public class CPRInteraction : MonoBehaviour
 
         if (touch.phase != TouchPhase.Began) return;
 
-        Ray ray = Camera.main.ScreenPointToRay(touch.position);
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null) return;
+
+        Ray ray = mainCamera.ScreenPointToRay(touch.position);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {

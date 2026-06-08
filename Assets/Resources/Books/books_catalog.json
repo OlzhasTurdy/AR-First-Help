@@ -1,0 +1,95 @@
+{
+  "books": [
+    {
+      "fileName": "book_first_aid",
+      "title": "Алғашқы Медициналық Көмек",
+      "author": "Медицина Академиясы",
+      "coverColor": "#2ECC71",
+      "coverIcon": "icon_heart"
+    },
+    {
+      "fileName": "book_cpr",
+      "title": "ЖӨР — Жүрек-өкпе реанимациясы",
+      "author": "Дүниежүзілік денсаулық сақтау",
+      "coverColor": "#E74C3C",
+      "coverIcon": "icon_cpr"
+    },
+    {
+      "fileName": "book_choking",
+      "title": "Тұншығу кезінде көмек",
+      "author": "Алғашқы Көмек Орталығы",
+      "coverColor": "#3498DB",
+      "coverIcon": "icon_choking"
+    },
+    {
+      "fileName": "book_bleeding",
+      "title": "Қан кетуді тоқтату",
+      "author": "Медицина Академиясы",
+      "coverColor": "#9B59B6",
+      "coverIcon": "icon_bleeding"
+    },
+    {
+      "fileName": "book_burns",
+      "title": "Күйіктерде алғашқы көмек",
+      "author": "Медицина Академиясы",
+      "coverColor": "#E67E22",
+      "coverIcon": "icon_burns"
+    },
+    {
+      "fileName": "book_road_accident",
+      "title": "Жол-көлік оқиғасындағы көмек",
+      "author": "Медицина Академиясы",
+      "coverColor": "#1ABC9C",
+      "coverIcon": "icon_car"
+    },
+    {
+      "fileName": "book_animal_attack",
+      "title": "Жануарлар шабуылындағы көмек",
+      "author": "Алғашқы Көмек Орталығы",
+      "coverColor": "#D35400",
+      "coverIcon": "icon_animal"
+    },
+    {
+      "fileName": "book_stroke_heart",
+      "title": "Инсульт және Инфаркт",
+      "author": "Медицина Академиясы",
+      "coverColor": "#E74C3C",
+      "coverIcon": "icon_heart_attack"
+    },
+    {
+      "fileName": "book_drowning",
+      "title": "Суға кету кезіндегі көмек",
+      "author": "Дүниежүзілік ұйым",
+      "coverColor": "#3498DB",
+      "coverIcon": "icon_water"
+    },
+    {
+      "fileName": "book_poisoning",
+      "title": "Улану кезіндегі көмек",
+      "author": "Медицина Академиясы",
+      "coverColor": "#95A5A6",
+      "coverIcon": "icon_poison"
+    },
+    {
+      "fileName": "book_seizure",
+      "title": "Талма және Естен тану",
+      "author": "Алғашқы Көмек Орталығы",
+      "coverColor": "#9B59B6",
+      "coverIcon": "icon_seizure"
+    },
+    {
+      "fileName": "book_frostbite",
+      "title": "Үсу және Суық тию",
+      "author": "Медицина Академиясы",
+      "coverColor": "#34495E",
+      "coverIcon": "icon_frost"
+    },
+    {
+      "fileName": "book_heatstroke",
+      "title": "Күн өту және Ыстық соғу",
+      "author": "Алғашқы Көмек Орталығы",
+      "coverColor": "#F1C40F",
+      "coverIcon": "icon_sun"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ public class SceneLoader : MonoBehaviour
     }
     public void LoadARSC()
     {
-        SceneManager.LoadSceneAsync("ARScene");
+        ARSceneLoadGuard.LoadARScene();
     }
     public void LoadQuiz()
     {
@@ -57,5 +57,9 @@ public class SceneLoader : MonoBehaviour
         {
             ScenarioManager.Instance.ResetScenarioData();
         }
+    }
+    public void Library()
+    {
+        SceneManager.LoadScene("library");
     }
 }

@@ -101,6 +101,6 @@ public class ProfileScenarioListController : MonoBehaviour
         ScenarioManager.GetInstance().SelectCustomScenario(loadedScenario);
 
         // Переходим в AR сцену
-        SceneManager.LoadScene("ARScene");
+        ARSceneLoadGuard.LoadARScene();
     }
 }

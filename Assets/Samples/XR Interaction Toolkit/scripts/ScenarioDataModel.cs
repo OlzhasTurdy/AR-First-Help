@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 
-// Структура одного шага
 [System.Serializable]
 public class CustomStep
 {
@@ -8,9 +7,10 @@ public class CustomStep
     public string description;
     public string warnings;
     public string modelUrl;
+    public string videoUrl;   // пїЅпїЅпїЅпїЅпїЅ
+    public string quizRaw;   // пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 }
 
-// Структура всего сценария
 [System.Serializable]
 public class CustomScenario
 {
@@ -18,7 +18,6 @@ public class CustomScenario
     public List<CustomStep> steps = new List<CustomStep>();
 }
 
-// Статический класс для хранения данных МЕЖДУ сценами
 public static class ScenarioDraft
 {
     public static CustomScenario CurrentDraft = new CustomScenario();
